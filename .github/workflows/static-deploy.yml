@@ -3,7 +3,7 @@ name: Deploy static site
 on:
   push:
     branches:
-      - test
+      - master
 
 jobs:
   build-and-push-image:
