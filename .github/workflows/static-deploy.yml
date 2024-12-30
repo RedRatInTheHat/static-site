@@ -46,7 +46,7 @@ jobs:
       
       - name: Create SSH tunnel
         run: |
-          ssh -o StrictHostKeyChecking=no -fN -L 6443:${{ vars.K8S_SERVER }}:443 ubuer@${{ vars.BASTION_IP }}
+          ssh -o StrictHostKeyChecking=no -fN -L 6443:${{ vars.K8S_SERVER }}:6443 ubuer@${{ vars.BASTION_IP }}
           sleep 5
       
       - name: Check kubectl
