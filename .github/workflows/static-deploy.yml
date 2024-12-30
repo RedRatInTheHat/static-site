@@ -37,3 +37,6 @@ jobs:
         run: |
           echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
           export KUBECONFIG=$(pwd)/kubeconfig
+      
+      - name: Test
+        run: echo ~/.ssh/config
