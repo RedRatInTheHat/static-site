@@ -43,10 +43,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          echo "Host bastion" >> ~/.ssh/config
-          echo "  Hostname ${{ vars.BASTION_IP }}" >> ~/.ssh/config
-          echo "  User ubuer" >> ~/.ssh/config
-          echo "Host 192.168.*" >> ~/.ssh/config
-          echo "  ProxyJump bastion" >> ~/.ssh/config
-          echo "  User ubuer" >> ~/.ssh/config
-          chmod 600 ~/.ssh/config
+      
+      - name: Create SSH tunnel
+        run: |
+          ssh -o StrictHostKeyChecking=no -N -L 6443:${{ vars.K8S_SERVER }}:443 ubuer@${{ vars.BASTION_HOST }}
+          sleep 5
+      
+      - name: Check kubectl
+        run: |
+          kubectl get pods
