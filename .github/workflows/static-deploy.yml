@@ -38,5 +38,15 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
           export KUBECONFIG=$(pwd)/kubeconfig
       
-      - name: Test
-        run: echo ~/.ssh/config
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "Host bastion" >> ~/.ssh/config
+          echo "  Hostname ${{ vars.BASTION_IP }}" >> ~/.ssh/config
+          echo "  User ubuer" >> ~/.ssh/config
+          echo "Host 192.168.*" >> ~/.ssh/config
+          echo "  ProxyJump bastion" >> ~/.ssh/config
+          echo "  User ubuer" >> ~/.ssh/config
+          chmod 600 ~/.ssh/config
