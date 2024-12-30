@@ -35,8 +35,8 @@ jobs:
     steps:
       - name: Set up K8s context
         run: |
-          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
-          export KUBECONFIG=$(pwd)/kubeconfig
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
       
       - name: Setup SSH
         run: |
